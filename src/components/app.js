@@ -46,16 +46,22 @@ export default class App extends React.Component {
             return preVal += currVal.value
           }, 0)
     if (userScore > 21) {
-      this.calculateAiScore("Winner")
       return "BUST"
+    }else if (this.calculateAiScore() === "BUST") {
+      return "Winner!"
     }else{
       return userScore
     }
   }
 
   aiHitorStay(){
-    while (this.calculateAiScore() < this.calculateUserScore()) {
-      this.hitMe("ai")
+    if (this.calculateUserScore() !== "BUST") {
+      while (this.calculateAiScore() < this.calculateUserScore()) {
+        if (this.calculateAiScore() === "BUST") {
+          return
+        }
+        this.hitMe("ai")
+      }
     }
   }
 

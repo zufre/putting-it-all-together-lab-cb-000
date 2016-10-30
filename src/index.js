@@ -15,7 +15,7 @@ const render = () => {
 
 store.subscribe(render);
 store.dispatch(fetchDeck())
-store.dispatch(setAICards())
-store.dispatch(setUserCards())
+store.dispatch(setAICards(store.getState()))
+store.dispatch(setUserCards(store.getState()))
 
 require('../test/index-test.js'); // Leave this in!

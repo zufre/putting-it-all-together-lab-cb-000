@@ -59,21 +59,13 @@ export default (state={}, action) => {
           {name:"King of Hearts", value: 10}
         ]
       }
+
       case 'SET_AI_CARDS':
-        for (var i = 0; i < 2; i++) {
-          const randIndex = Math.floor(Math.random() * state.deck.length)
-          state.aiCards.push(state.deck[randIndex])
-          state.deck.splice(randIndex, 1);
-        }
-        return state
+        return action.payload
+
       case 'SET_USER_CARDS':
-        for (var i = 0; i < 2; i++) {
-          const randIndex = Math.floor(Math.random() * state.deck.length)
-          state.userCards.push(state.deck[randIndex])
-          state.deck.splice(randIndex, 1);
-        }
-        return state
-        
+        return action.payload
+
       case 'HIT':
         return action.payload
 
