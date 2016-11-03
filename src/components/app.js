@@ -9,7 +9,7 @@ export default class App extends React.Component {
     this.hitMe = this.hitMe.bind(this)
     this.calculateAiScore = this.calculateAiScore.bind(this)
     this.calculateUserScore = this.calculateUserScore.bind(this)
-    this.aiHitorStay = this.aiHitorStay.bind(this)
+    this.stay = this.stay.bind(this)
   }
 
   hitMe(user){
@@ -54,7 +54,7 @@ export default class App extends React.Component {
     }
   }
 
-  aiHitorStay(){
+  stay(){
     if (this.calculateUserScore() !== "BUST") {
       while (this.calculateAiScore() < this.calculateUserScore()) {
         if (this.calculateAiScore() === "BUST") {
@@ -68,7 +68,7 @@ export default class App extends React.Component {
   render(){
     return(
       <div>
-        <UserBlackjack store={this.props.store} hitMe={this.hitMe} score={this.calculateUserScore} aiHitorStay={this.aiHitorStay} calculateAiScore={this.calculateAiScore} />
+        <UserBlackjack store={this.props.store} hitMe={this.hitMe} score={this.calculateUserScore} stay={this.stay} calculateAiScore={this.calculateAiScore} />
         <AIBlackjack store={this.props.store} hitMe={this.hitMe} score={this.calculateAiScore} userScore={this.calculateUserScore} />
 
       </div>

@@ -15,7 +15,7 @@ export default class UserBlackjack extends React.Component {
 
   handleUserStay(e){
     e.preventDefault()
-    this.props.aiHitorStay()
+    this.props.stay()
   }
 
 render(){
