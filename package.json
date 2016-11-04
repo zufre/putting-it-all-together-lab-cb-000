@@ -1,7 +1,7 @@
 {
   "name": "introduction-to-react-assessment",
   "version": "0.1.0",
-  "description": "Build a small React application using all that you&#39;ve learned in the course",
+  "description": "Build a small React application using all that you&#39 ve learned in the course",
   "engines": {
     "node": "6.x",
     "npm": "3.x"

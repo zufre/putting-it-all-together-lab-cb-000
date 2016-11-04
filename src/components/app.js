@@ -1,11 +1,11 @@
-import React from 'react';
-import UserBlackjack from './user_blackjack';
-import AIBlackjack from './ai_blackjack';
-import { hit } from '../actions/blackjack_actions';
+import React, { Component } from 'react'
+import UserBlackjack from './user_blackjack'
+import AIBlackjack from './ai_blackjack'
+import { hit } from '../actions/blackjack_actions'
 
-export default class App extends React.Component {
+export default class App extends Component {
   constructor(props){
-    super(props);
+    super(props)
     this.hitMe = this.hitMe.bind(this)
     this.calculateAiScore = this.calculateAiScore.bind(this)
     this.calculateUserScore = this.calculateUserScore.bind(this)
@@ -17,14 +17,14 @@ export default class App extends React.Component {
       const gameState = this.props.store.getState()
       const randIndex = Math.floor(Math.random() * gameState.deck.length)
       gameState.userCards.push(gameState.deck[randIndex])
-      gameState.deck.splice(randIndex, 1);
+      gameState.deck.splice(randIndex, 1)
 
       this.props.store.dispatch(hit(gameState))
     }else {
       const gameState = this.props.store.getState()
       const randIndex = Math.floor(Math.random() * gameState.deck.length)
       gameState.aiCards.push(gameState.deck[randIndex])
-      gameState.deck.splice(randIndex, 1);
+      gameState.deck.splice(randIndex, 1)
 
       this.props.store.dispatch(hit(gameState))
     }
