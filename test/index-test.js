@@ -73,10 +73,11 @@ const deck = {
 }
 
 describe('Blackjack:', function(){
+  let store
 
   before(function(){
     expect(createStore).toBeA('function', 'store not created')
-    const store = createStore(blackjackReducer)
+    store = createStore(blackjackReducer)
   })
 
   describe('`fetchDeck()`', function(){
@@ -137,14 +138,15 @@ describe('Blackjack:', function(){
   })
 
   describe('<App />', function () {
-    it('is mounted', function(){
-      expect(App).toExist('<App /> not mounted')
-    })
+    let wrapper
+    let userScore
+    let aiScore
 
     before(function() {
-      const wrapper = mount(<App store={store}/>)
-      const userScore = wrapper.props().store.getState().userCards.reduce((prev, curr)=> {return prev + curr.value}, 0);
-      const aiScore = wrapper.props().store.getState().aiCards.reduce((prev, curr)=> {return prev + curr.value}, 0);
+      expect(App).toExist('<App /> not mounted')
+      wrapper = mount(<App store={store}/>)
+      userScore = wrapper.props().store.getState().userCards.reduce((prev, curr)=> {return prev + curr.value}, 0);
+      aiScore = wrapper.props().store.getState().aiCards.reduce((prev, curr)=> {return prev + curr.value}, 0);
     });
 
     it('should have access to the store', function () {
@@ -188,13 +190,13 @@ describe('Blackjack:', function(){
   })
 
   describe('<AIBlackjack />', function(){
-    it('is mounted', function(){
-      expect(AIBlackjack).toExist('<AIBlackjack /> not mounted')
-    })
+    let wrapper
+    let component
 
     before(function(){
-      const wrapper = mount(<AIBlackjack store={store} score={function(){}}/>)
-      const component = shallow(<AIBlackjack store={store} score={function(){}}/>)
+      expect(AIBlackjack).toExist('<AIBlackjack /> not mounted')
+      wrapper = mount(<AIBlackjack store={store} score={function(){}}/>)
+      component = shallow(<AIBlackjack store={store} score={function(){}}/>)
     })
 
     it('should be a functional component', function(){
@@ -222,12 +224,11 @@ describe('Blackjack:', function(){
   })
 
   describe('<UserBlackjack />', function(){
-    it('is mounted', function(){
-      expect(UserBlackjack).toExist('<UserBlackjack /> not mounted')
-    })
+    let container
 
     before(function(){
-      const container = mount(<App store={store} />)
+      expect(UserBlackjack).toExist('<UserBlackjack /> not mounted')
+      container = mount(<App store={store} />)
     })
 
     it('should be a class component', function(){
@@ -299,5 +300,5 @@ describe('Blackjack:', function(){
       expect(wrapper2.find('ul').text()).toEqual(wrapper2.props().store.getState().aiCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not render new card to AI page')
     })
 
-})
+  })
 })
