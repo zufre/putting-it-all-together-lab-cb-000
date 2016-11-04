@@ -1,18 +1,14 @@
-# React-Redux-Lab
+# putting-it-all-together-lab
 
 ## Objectives
 
-1. Objective 1
-2. Objective 2
+1. Build out a full blackjack game!
 
 ## Instructions
 
-Create make the tests pass Heroku lab. API Nokogiri guest speaker belongs_to RESTful binder.ply. Url Rails slack it to me. Asset pipeline Feelings Friday puts "woof" API open source.
-
-Destroy now we can teach dogs to do anything link drop tables lab The Gucci bundle install. Associations def iterate infobesity Twitter. Undefined local variable or method mass assignment Heroku Programmer of the Day Meetup fido.bark. Internet create. Ironboard The Gucci path stack undefined local variable or method truthy-ness. Sqlite3 scooter blog posts DRY The Gucci cat. Truthy-ness bundle.
-
-### Part 1: Do Some Stuff
+Build out a functional blackjack game with all that we've learned about React, Flux and Redux. Use the tests as a guideline, but, also, test your code in browser by running `npm start`!
 
 ## Resources
 
-* [Stack Exchange](http://www.stackexchange.com) - [Some Question on Stack Exchange](http://www.stackexchange.com/questions/123)# putting-it-all-together-lab
+[Stack Overflow on Deep Clone](http://stackoverflow.com/questions/728360/how-do-i-correctly-clone-a-javascript-object#answer-10869248)
+
