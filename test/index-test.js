@@ -195,8 +195,8 @@ describe('Blackjack:', function(){
 
     before(function(){
       expect(AIBlackjack).toExist('<AIBlackjack /> not mounted')
-      wrapper = mount(<AIBlackjack store={store} score={function(){}}/>)
-      component = shallow(<AIBlackjack store={store} score={function(){}}/>)
+      wrapper = mount(<AIBlackjack aiCards={store.getState().aiCards} score={function(){}}/>)
+      component = shallow(<AIBlackjack aiCards={store.getState().aiCards} score={function(){}}/>)
     })
 
     it('should be a functional component', function(){
@@ -204,7 +204,7 @@ describe('Blackjack:', function(){
     })
 
     it('should have access to the store', function(){
-      expect(wrapper.props().store).toExist('cannot access the store as a prop')
+      expect(wrapper.props().aiCards).toExist('cannot access the aiCards array as a prop')
     })
 
     it('should have "Computer" as a `h1` tag', function(){
@@ -218,7 +218,7 @@ describe('Blackjack:', function(){
     it("should list out each of AI's cards as `li` inside `ul`", function(){
       expect(wrapper.find('ul').is('ul')).toEqual(true, 'does not have a `ul` tag')
       expect(wrapper.find('li').length).toEqual(2, 'does not render each card as separate `li`')
-      expect(wrapper.find('ul').text()).toEqual(wrapper.props().store.getState().aiCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not properly list out AI cards from state')
+      expect(wrapper.find('ul').text()).toEqual(wrapper.props().aiCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not properly list out AI cards from state')
     })
 
   })
@@ -232,72 +232,72 @@ describe('Blackjack:', function(){
     })
 
     it('should be a class component', function(){
-      expect(React.Component.isPrototypeOf(UserBlackjack)).toEqual(true, '`<UserBlackjack />` should be a functional component')
+      expect(React.Component.isPrototypeOf(UserBlackjack)).toEqual(false, '`<UserBlackjack />` should be a functional component')
     })
 
     it('should have access to the store', function(){
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}}/>)
-      expect(wrapper.props().store).toExist('cannot access the store as a prop')
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
+      expect(wrapper.props().userCards).toExist('cannot access the userCards array as a prop')
     })
 
     it('should have "Player1" as a `h1` tag', function(){
-      const component = shallow(<UserBlackjack store={store} score={function(){}}/>)
+      const component = shallow(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
       expect(component.find('h1').text()).toEqual('Player1', 'cannot find `h1` with "Player1"')
     })
 
     it('should have "Score: " as a `h2` tag', function(){
-      const component = shallow(<UserBlackjack store={store} score={function(){}}/>)
+      const component = shallow(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
       expect(component.find('h2').text()).toEqual('Score: ', 'cannot find `h2` with "Score"')
     })
 
     it("should list out each of User's cards as `li` inside `ul`", function(){
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}}/>)
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
       expect(wrapper.find('ul').is('ul')).toEqual(true, 'does not have a `ul` tag')
       expect(wrapper.find('li').length).toEqual(2, 'does not render each card as separate `li`')
-      expect(wrapper.find('ul').text()).toEqual(wrapper.props().store.getState().userCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not properly list out User cards from state')
+      expect(wrapper.find('ul').text()).toEqual(wrapper.props().userCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not properly list out User cards from state')
     })
 
     it("should have a 'Hit Me' `button` within a `form`", function(){
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}}/>)
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
       expect(wrapper.find('form').findWhere(n=>n.text() === " Hit Me ").nodes[1].type).toEqual('submit', 'does not have a "Hit Me" submit `button` tag')
     })
 
     it("should have an onSubmit event on the 'Hit Me' `button` `form` that calls the `hitMe()` function from parent component", function(){
       const onButtonClick = createSpy()
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}} hitMe={onButtonClick}/>)
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}} hitMe={onButtonClick}/>)
       wrapper.find('form').at(0).simulate('submit')
       expect(onButtonClick.calls.length).toEqual(1, 'does not call `hitMe` function')
     })
 
     it("should display new user card and re-tally score when user clicks 'Hit Me'", function(){
-      const wrapper = mount(<UserBlackjack store={store} score={container.node.calculateUserScore} hitMe={container.node.hitMe}/>)
-      let userCards = wrapper.props().store.getState().userCards
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={container.node.calculateUserScore} hitMe={container.node.hitMe}/>)
+      let userCards = wrapper.props().userCards
       wrapper.find('form').at(0).simulate('submit')
-      const wrapper2 = mount(<UserBlackjack store={store} score={container.node.calculateUserScore} hitMe={container.node.hitMe}/>)
-      let userScore = userCards.reduce((prevCard, currCard) => {return prevCard + currCard.value}, 0)
+      const wrapper2 = mount(<UserBlackjack userCards={store.getState().userCards} score={container.node.calculateUserScore} hitMe={container.node.hitMe}/>)
+      let userScore = wrapper2.props().userCards.reduce((prevCard, currCard) => {return prevCard + currCard.value}, 0)
       let userScoreShow = userScore > 21 ? "BUST" : userScore
-      expect(wrapper2.find('ul').text()).toEqual(wrapper2.props().store.getState().userCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not render new card to page')
+      expect(wrapper2.find('ul').text()).toEqual(wrapper2.props().userCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not render new card to page')
       expect(wrapper2.find('h2').text()).toInclude(userScoreShow, 'does not show the right score')
     })
 
     it("should have a 'Stay' `button` within a second `form`", function(){
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}}/>)
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}}/>)
       expect(wrapper.find('form').findWhere(n=>n.text() === " Stay ").nodes[1].type).toEqual('submit', 'does not have a "Stay" submit `button` tag')
     })
 
     it("should have an onSubmit event on the 'Stay' `button` `form` that calls the `stay()` function from parent component", function(){
       const onButtonClick = createSpy()
-      const wrapper = mount(<UserBlackjack store={store} score={function(){}} stay={onButtonClick}/>)
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={function(){}} stay={onButtonClick}/>)
       wrapper.find('form').at(1).simulate('submit')
       expect(onButtonClick.calls.length).toEqual(1, 'does not call `stay` function')
     })
 
     it("should display new AI card and re-tally score when user clicks 'stay'", function(){
-      const wrapper = mount(<UserBlackjack store={store} score={container.node.calculateUserScore} stay={container.node.stay}/>)
-      let aiCards = wrapper.props().store.getState().aiCards
+      const wrapper = mount(<UserBlackjack userCards={store.getState().userCards} score={container.node.calculateUserScore} stay={container.node.stay}/>)
+      let aiCards = wrapper.props().aiCards
       wrapper.find('form').at(1).simulate('submit')
-      const wrapper2 = mount(<AIBlackjack store={store} score={container.node.calculateAiScore}/>)
-      expect(wrapper2.find('ul').text()).toEqual(wrapper2.props().store.getState().aiCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not render new card to AI page')
+      const wrapper2 = mount(<AIBlackjack aiCards={store.getState().aiCards} score={container.node.calculateAiScore}/>)
+      expect(wrapper2.find('ul').text()).toEqual(wrapper2.props().aiCards.reduce((prev, curr)=> {return prev + curr.name}, ''), 'does not render new card to AI page')
     })
 
   })
