@@ -1,42 +1,31 @@
 import React from 'react'
 
-export default class UserBlackjack extends React.Component {
+export default (props) => {
 
-  constructor(){
-    super()
-    this.handleUserHit = this.handleUserHit.bind(this)
-    this.handleUserStay = this.handleUserStay.bind(this)
-  }
-
-  handleUserHit(e){
-    e.preventDefault()
-    this.props.hitMe("user")
-  }
-
-  handleUserStay(e){
-    e.preventDefault()
-    this.props.stay()
-  }
-
-render(){
   return(
       <div>
         <h1>Player1</h1>
-          <h2>
-            Score: {this.props.score()}
-          </h2>
+        <h2>Score: {props.score()}</h2>
         <ul>
-          {this.props.store.getState().userCards.map((card, i) => <li key={i}>{card.name}</li>)}
+          {props.userCards.map((card, i) => <li key={i}>{card.name}</li>)}
         </ul>
-        <form onSubmit={this.handleUserHit}>
+
+        <form onSubmit={(e)=>{
+          e.preventDefault()
+          props.hitMe("user")
+        }}>
           <button > Hit Me </button>
         </form>
-        <form onSubmit={this.handleUserStay}>
+
+        <form onSubmit={(e)=>{
+          e.preventDefault()
+          props.stay()
+        }}>
           <button > Stay </button>
         </form>
+
       </div>
 
     )
-  }
 
 }

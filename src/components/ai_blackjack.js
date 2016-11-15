@@ -1,4 +1,4 @@
-import React from 'react' 
+import React from 'react'
 
 export default (props) => {
 
@@ -7,7 +7,7 @@ export default (props) => {
         <h1>Computer</h1>
         <h2>Score: {props.score()}</h2>
         <ul>
-          {props.store.getState().aiCards.map((card, i) => <li key={i}>{card.name}</li>)}
+          {props.aiCards.map((card, i) => <li key={i}>{card.name}</li>)}
         </ul>
 
       </div>

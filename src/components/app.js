@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserBlackjack from './user_blackjack'
 import AIBlackjack from './ai_blackjack'
-import { hit } from '../actions/blackjack_actions'
+import { hitAi, hitUser } from '../actions/blackjack_actions'
 
 export default class App extends Component {
   constructor(props){
@@ -14,19 +14,9 @@ export default class App extends Component {
 
   hitMe(user){
     if (user === "user") {
-      const gameState = this.props.store.getState()
-      const randIndex = Math.floor(Math.random() * gameState.deck.length)
-      gameState.userCards.push(gameState.deck[randIndex])
-      gameState.deck.splice(randIndex, 1)
-
-      this.props.store.dispatch(hit(gameState))
+      this.props.store.dispatch(hitUser(this.props.store.getState().deck))
     }else {
-      const gameState = this.props.store.getState()
-      const randIndex = Math.floor(Math.random() * gameState.deck.length)
-      gameState.aiCards.push(gameState.deck[randIndex])
-      gameState.deck.splice(randIndex, 1)
-
-      this.props.store.dispatch(hit(gameState))
+      this.props.store.dispatch(hitAi(this.props.store.getState().deck))
     }
   }
 
@@ -68,8 +58,8 @@ export default class App extends Component {
   render(){
     return(
       <div>
-        <UserBlackjack store={this.props.store} hitMe={this.hitMe} score={this.calculateUserScore} stay={this.stay} calculateAiScore={this.calculateAiScore} />
-        <AIBlackjack store={this.props.store} hitMe={this.hitMe} score={this.calculateAiScore} userScore={this.calculateUserScore} />
+        <UserBlackjack userCards={this.props.store.getState().userCards} hitMe={this.hitMe} score={this.calculateUserScore} stay={this.stay} calculateAiScore={this.calculateAiScore} />
+        <AIBlackjack aiCards={this.props.store.getState().aiCards} hitMe={this.hitMe} score={this.calculateAiScore} userScore={this.calculateUserScore} />
 
       </div>
     )

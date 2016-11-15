@@ -35,10 +35,24 @@ export function setUserCards(game){
   }
 }
 
-export function hit(game){
+export function hitUser(deck){
+
+  const randIndex = Math.floor(Math.random() * deck.length)
+  const newUserCard = deck[randIndex]
 
   return {
-    type: 'HIT',
-    payload: game
+    type: 'HIT_USER',
+    payload: newUserCard
+  }
+}
+
+export function hitAi(deck){
+
+  const randIndex = Math.floor(Math.random() * deck.length)
+  const newAiCard = deck[randIndex]
+
+  return {
+    type: 'HIT_AI',
+    payload: newAiCard
   }
 }

@@ -66,8 +66,23 @@ export default (state={}, action) => {
       case 'SET_USER_CARDS':
         return action.payload
 
-      case 'HIT':
-        return action.payload
+      case 'HIT_USER':
+        let userState = Object.assign({}, state)
+        userState.userCards = [...userState.userCards, action.payload]
+
+        let removeUserCardIndex = userState.deck.findIndex((card)=>card===action.payload)
+        userState.deck.splice(removeUserCardIndex, 1)
+
+        return userState
+
+      case 'HIT_AI':
+        let aiState = Object.assign({}, state)
+        aiState.aiCards = [...aiState.aiCards, action.payload]
+
+        let removeAiCardIndex = aiState.deck.findIndex((card)=>card===action.payload)
+        aiState.deck.splice(removeAiCardIndex, 1)
+
+        return aiState
 
     default:
       return state
