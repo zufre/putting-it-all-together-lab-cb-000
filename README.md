@@ -109,7 +109,7 @@ const initialState = {
 
 ### Step 1: Buid the Store, Reducer and Action Creators
 
-First thing's first, bring in a `store.js` from a past readme or lab (bonus points if you can write out the entire store without help). Import the `createStore` function to our `App.js` file and create a store with the provided `blackjack_reducer`. We will come back to building out the rest of our reducer.
+First thing's first, bring in a `store.js` from a past readme or lab (bonus points if you can write out the entire store without help). Import the `createStore` function to our `index.js` file and create a store with the provided `blackjack_reducer`. We will come back to building out the rest of our reducer.
 
 ####Actions
 
